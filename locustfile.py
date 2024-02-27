@@ -12,7 +12,7 @@
 import os
 import string
 import random
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 
 class MyTaskSet(TaskSet):
     @task(1000)
