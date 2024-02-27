@@ -1,0 +1,185 @@
+{
+    "script": [
+        {
+            "name": "report capacity",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 5,
+                "type": "MatchCapacityRpc.ReportCapacityV2Request",
+                "payload": {
+                    "serverId": "{{serverId}}",
+                    "totalCapacity": "1",
+                    "usedCapacity": "0",
+                    "gameVersion":"81635.loadtest.dev",
+                    "gameServerZone":"test_region"
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "report full capacity",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 5,
+                "type": "MatchCapacityRpc.ReportCapacityV2Request",
+                "payload": {
+                    "serverId": "{{serverId}}",
+                    "totalCapacity": "0",
+                    "usedCapacity": "1",
+                    "gameVersion":"81635.loadtest.dev",
+                    "gameServerZone":"test_region"
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "get game start data",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId":6,
+                "type":"GameInstanceRpc.GetGameStartDataV1Request",
+                "payload":{
+                    "gameInstanceId": "{{gameInstanceId}}"
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "connect players",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 7,
+                "type": "GameInstanceRpc.ConnectPlayersV1Request",
+                "payload": {
+                    "gameInstanceId": "{{gameInstanceId}}",
+                    "playerConnectionDetails": [
+                        {"playerId" : "{{playerId0}}"},
+                        {"playerId" : "{{playerId1}}"},
+                        {"playerId" : "{{playerId2}}"},
+                        {"playerId" : "{{playerId3}}"},
+                        {"playerId" : "{{playerId4}}"},
+                        {"playerId" : "{{playerId5}}"}
+                    ]
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "keep game alive",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 8,
+                "type": "GameInstanceRpc.GameKeepAliveV1Request",
+                "payload": {
+                    "gameInstanceId": "{{gameInstanceId}}"
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "end game",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "GameInstanceRpc.EndGameV1Request",
+                "payload": {
+                    "gameInstanceId": "{{gameInstanceId}}",
+                    "playerGameResults": [
+                        {
+                            "playerId": "{{playerId0}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                "events": {
+                                    "playerstat.headshots": "{{playerHeadshots0}}",
+                                    "playerstat.xp": "{{playerXp0}}"
+                                }
+                            }
+                        },
+                        {
+                            "playerId": "{{playerId1}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                 "events": {
+                                    "playerstat.headshots": "{{playerHeadshots1}}",
+                                    "playerstat.xp": "{{playerXp1}}"
+                                }
+                            }
+                        },
+                        {
+                            "playerId" : "{{playerId2}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                 "events": {
+                                    "playerstat.headshots": "{{playerHeadshots2}}",
+                                    "playerstat.xp": "{{playerXp2}}"
+                                }
+                            }
+                        },
+                        {
+                            "playerId" : "{{playerId3}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                 "events": {
+                                    "playerstat.headshots": "{{playerHeadshots3}}",
+                                    "playerstat.xp": "{{playerXp3}}"
+                                }
+                            }
+                        },
+                        {
+                            "playerId" : "{{playerId4}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                 "events": {
+                                    "playerstat.headshots": "{{playerHeadshots4}}",
+                                    "playerstat.xp": "{{playerXp4}}"
+                                }
+                            }
+                        },
+                        {
+                            "playerId" : "{{playerId5}}",
+                            "ext":  {
+                                "playerPoints": 10,
+                                 "events": {
+                                    "playerstat.headshots": "{{playerHeadshots5}}",
+                                    "playerstat.xp": "{{playerXp5}}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{partnerGameToken}}"     
+            },
+            "acceptable-timeout": "120"
+        }
+    ]
+}
+

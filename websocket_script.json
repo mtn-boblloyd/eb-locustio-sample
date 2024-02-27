@@ -1,0 +1,312 @@
+{
+    "script": [
+        {
+            "name": "get config for client",
+            "uri": "v1/rpc",
+            "body": {"requestId":5,"type":"MtnConfigServiceRpc.GetConfigForClientV1Request","payload":{"version":"1","type":"UNDEFINED"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "120"
+        },
+        {
+            "name": "get inventory",
+            "uri": "v1/rpc",
+            "body": {"requestId":6,"type":"InventoryRpc.GetInventoryV2Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get login data",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "GameDataRpc.GetLoginDataV3Request",
+                "payload": {}
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "sync entitlements",
+            "uri": "v1/rpc",
+            "body": {"requestId":8,"type":"InventoryRpc.SyncEntitlementsV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "create party",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 2,
+                "type": "PartyRpc.CreateV1Request",
+                "payload": {
+                    "createRequestExt": {
+                        "standard": {
+                            
+                        },
+                        "lobbyMode": "standard_casual",
+                        "version": "81635",
+                        "region": "test_region",
+                        "tag":"dev",
+                        "useTeamMmr": true,
+                        "profile":"loadtest"
+                    },
+                    "playerJoinRequestExt": {
+                        "version": "81635",
+                        "preferredRegions": ["test_region"],
+                        "regionPings": {"test_region": "{{region_ping}}"}
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60",
+            "roles": "Host2,Host3,Solo",
+            "capture": {
+
+            }
+        },        
+        {
+            "name": "join party",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 2,
+                "type": "PartyRpc.JoinWithInviteCodeV1Request",
+                "payload": {
+                    "requestExt": {
+                        "version": "81635",
+                        "preferredRegions": ["test_region"],
+                        "regionPings": {"test_region": "{{region_ping}}"}
+                    },
+                    "inviteCode": "{{inviteCode}}",
+                    "gameClientVersion": "81635"
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60",
+            "roles": "Joiner"
+        },
+        {
+            "name": "wait",
+            "success": "PartyRpc.PartyDetailsV1Notification",
+            "acceptable-timeout": "360",
+            "roles": "Host2,Host3"
+        },
+        {
+            "name": "get all player data client",
+            "uri": "v1/rpc",
+            "body":  {"requestId":9,"type":"MtnPlayerDataServiceRpc.GetAllPlayerDataClientV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "fetch player outfit loadouts",
+            "uri": "v1/rpc",
+            "body":   {"requestId":10,"type":"MtnLoadoutServiceRpc.FetchPlayerOutfitLoadoutsV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "fetch player weapon loadouts",
+            "uri": "v1/rpc",
+            "body":  {"requestId":11,"type":"MtnLoadoutServiceRpc.FetchPlayerWeaponLoadoutsV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "login to chat",
+            "uri": "v1/rpc",
+            "body":  {"requestId":13,"type":"MtnChatServiceRpc.LoginToChatV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "party ready player",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 3,
+                "type": "PartyRpc.SetReadyStateV1Request",
+                "payload": {
+                    "ready": true
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "update party selections",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId":4,
+                "type":"PartyRpc.UpdatePartyV1Request",
+                "payload": {
+                    "requestExt": {
+                        "pool":"",
+                        "lobbyMode":"standard_casual",
+                        "removePlayers":[],
+                        "version":"81635",
+                        "region":"test_region",
+                        "tag":"dev",
+                        "profile":"loadtest",
+                        "useTeamMmr":false,
+                        "acceptableRegions":[],
+                        "standard": {
+                            "mode":"Standard"
+                        }
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get extended player crew by player id",
+            "uri": "v1/rpc",
+            "body":  {"requestId":18,"type":"MtnCrewServiceRpc.GetExtendedPlayerCrewByPlayerIdV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get crew dashboard",
+            "uri": "v1/rpc",
+            "body":  {"requestId":19,"type":"MtnCrewServiceRpc.GetCrewDashboardDataV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get crew chatroom",
+            "uri": "v1/rpc",
+            "body":  {"requestId":21,"type":"MtnCrewServiceRpc.GetCrewChatRoomV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get bulk profile data",
+            "uri": "v1/rpc",
+            "body":  {"requestId":22,"type":"MtnPlayerDataServiceRpc.GetBulkProfileDataClientV1Request","payload":{"playerIds":["576cad01-7dc2-4f9e-b1c7-18ce803e411d","0225cf65-1aad-471f-ae27-ebc5ba672fea"]}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get beacon endpoints",
+            "uri": "v1/rpc",
+            "body": {"requestId":24,"type":"MtnBeaconServiceRpc.GetBeaconEndpointsV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get messages",
+            "uri": "v1/rpc",
+            "body": {"requestId":25,"type":"MtnInboxServiceRpc.GetMessagesClientV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get extended player crew by player id",
+            "uri": "v1/rpc",
+            "body": {"requestId":26,"type":"MtnCrewServiceRpc.GetExtendedPlayerCrewByPlayerIdV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get crew dashboard data",
+            "uri": "v1/rpc",
+            "body": {"requestId":27,"type":"MtnCrewServiceRpc.GetCrewDashboardDataV1Request","payload":{}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get extended player crew by player id",
+            "uri": "v1/rpc",
+            "body": {"requestId":30,"type":"MtnCrewServiceRpc.GetExtendedPlayerCrewByPlayerIdV1Request","payload":{"playerId":"{{player_id}}"}},
+            "headers": {
+                "Content-Type":"application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "exit"
+        }
+    ]
+}
+

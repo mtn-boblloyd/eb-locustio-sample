@@ -1,0 +1,2 @@
+start "" python -m locust -f websocket_server/locustfile.py --tags load_test --host ws://localhost:10100 -u 100 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --match-duration-min 600 --match-duration-max 1200 -P 8088 
+start "" python -m locust -f websocket_client/locustfile.py --tags load_test --host ws://localhost:10000 -u 600 -r 12 --login-schema http --http-port 11000 --operator-port 11200 --matchmaking-script "configs/websocket_matchmaking_full.json" -P 8089

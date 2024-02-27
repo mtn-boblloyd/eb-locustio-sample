@@ -1,0 +1,147 @@
+{
+    "script": [
+        {
+            "name": "login",
+            "uri": "v1/account/authenticateorcreatev2",
+            "port": "social",
+            "body": {
+                "providerId": 1, 
+                "providerToken": "{\"accountId\":\"{{social_id}}\",\"displayName\":\"{{social_id}}\"}", 
+                "gameShardId":"00000000-0000-0000-0000-000000000001"
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json"
+            },
+            "return": {
+                "playerGameToken": ["pragmaTokens","pragmaGameToken"]
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get login data",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "GameDataRpc.GetLoginDataV2Request",
+                "payload": {}
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "create party",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "PartyRpc.CreateV1Request",
+                "payload": {
+                    "createRequestExt": {
+                        "standard": {
+                            
+                        },
+                        "lobbyMode": "Test",
+                        "version": "81635",
+                        "region": "Test",
+                        "tag":"Test",
+                        "useTeamMmr": true
+                    },
+                    "playerJoinRequestExt": {
+                        "version": "81635"
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "party ready player",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "PartyRpc.SetReadyStateV1Request",
+                "payload": {
+                    "ready": true
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "update party selections",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId":16,
+                "type":"PartyRpc.UpdatePartySelectionsV1Request",
+                "payload": {
+                    "requestExt": {
+                        "pool":"",
+                        "lobbyMode":"standard_casual",
+                        "removePlayers":[],
+                        "version":"81635",
+                        "region":"",
+                        "tag":"dev",
+                        "profile":"standard",
+                        "useTeamMmr":false,
+                        "acceptableRegions":[],
+                        "standard": {
+                            "mode":"Commons"
+                        }
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "start matchmaking",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId":37,
+                "type":"PartyRpc.StartMatchmakingV1Request",
+                "payload":{}
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "get matchmaking info",
+            "uri": "v1/rpc",
+            "body": {
+                "requestId": 1,
+                "type": "MatchmakingRpc.GetMatchmakingInfoV1Request",
+                "payload": {}
+            },
+            "headers": {
+                "Content-Type":"application/json", 
+                "Accept": "application/json",
+                "Authorization": "Bearer {{playerGameToken}}"
+            },
+            "acceptable-timeout": "60"
+        },
+        {
+            "name": "exit"
+        }
+    ]
+}
+
