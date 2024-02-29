@@ -1,1 +1,1 @@
-locust-master: /bin/bash -c "whoami"
+locust-master: /bin/bash -c "cd /var/app/staging && exec python -m locust -f /var/app/staging/websocket_server/locustfile.py --tags load_test --host ws://localhost:10100 -u 100 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --headless --master -P 8088 --master-bind-port 5556"
