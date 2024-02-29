@@ -39,38 +39,57 @@ def main
   eb_env_name = env_vars["EB_ENV_NAME"]
   master_ip_table = env_vars["MASTER_IP_TABLE"]
   deployment_id = dep_manifest["DeploymentId"]
+  deploy_type = env_vars["DEPLOY_TYPE"]
 
   # Use DynamoDB conditional update to select a master and save it's IP.
   # Only a single instance will be able to update the record, all others
   # will fail the conditional check
-  is_master = write_master_ip(master_ip_table, eb_env_name, private_ip, deployment_id)
+  # is_master = write_master_ip(master_ip_table, eb_env_name, private_ip, deployment_id)
+
 
   puts "We are " + (is_master ? "master" : "follower")
 
-  if is_master
+  if deploy_type == "CONTROLLER"
     # since this instance is the master, save 127.0.0.1 as the master IP
     # to be used by the follower processes
     File.open('.masterIP', "w") { |f| f.print "127.0.0.1" }
 
     # write .foreman file with a single master process and the number of cores
     # available minus 1 follower processes
-    File.open('.foreman', "w") { |f| f.print "concurrency: locust-master=1,locust-follower=#{num_cores - 1}" }
+    File.open('.foreman', "w") { |f| f.print "concurrency: locust-master=1,locust-client=0,locust-server=0" }
   else
-    # since this instance is a follower, get the master IP from the DynamoDB table
-    master_ip = get_master_ip(master_ip_table, eb_env_name)
+    if deploy_type == "CLIENT"
+      # since this instance is a follower, get the master IP from the DynamoDB table
+      master_ip = get_master_ip(master_ip_table, eb_env_name)
 
-    if master_ip
-      # save the master IP to be used by the follower processes
-      File.open('.masterIP', "w") { |f| f.print "#{master_ip}" }
+      if master_ip
+        # save the master IP to be used by the follower processes
+        File.open('.masterIP', "w") { |f| f.print "#{master_ip}" }
 
-      # update the nginx.conf to use the master instances IP for upstream
-      run_command('sed -i -e "s|\(.*\)http://\(.*\):\(.*\)|\1http://' + master_ip + ':\3|g" '\
-                  '.ebextensions/nginx/nginx.conf')
-    end
+        # update the nginx.conf to use the master instances IP for upstream
+        run_command('sed -i -e "s|\(.*\)http://\(.*\):\(.*\)|\1http://' + master_ip + ':\3|g" '\
+                    '.ebextensions/nginx/nginx.conf')
+      end
 
-    # write the .foreman file with zero master processes and number of cores
-    # available follower proceses
-    File.open('.foreman', "w") { |f| f.print "concurrency: locust-master=0,locust-follower=#{num_cores}" }
+      # write the .foreman file with zero master processes and number of cores
+      # available follower proceses
+      File.open('.foreman', "w") { |f| f.print "concurrency: locust-master=0,locust-client=1,locust-server=0" }
+    else
+      # since this instance is a follower, get the master IP from the DynamoDB table
+      master_ip = get_master_ip(master_ip_table, eb_env_name)
+
+      if master_ip
+        # save the master IP to be used by the follower processes
+        File.open('.masterIP', "w") { |f| f.print "#{master_ip}" }
+
+        # update the nginx.conf to use the master instances IP for upstream
+        run_command('sed -i -e "s|\(.*\)http://\(.*\):\(.*\)|\1http://' + master_ip + ':\3|g" '\
+                    '.ebextensions/nginx/nginx.conf')
+      end
+
+      # write the .foreman file with zero master processes and number of cores
+      # available follower proceses
+      File.open('.foreman', "w") { |f| f.print "concurrency: locust-master=0,locust-client=0,locust-server=1" }
   end
 
   # Recreate the application.conf since we have modified the .foreman file
