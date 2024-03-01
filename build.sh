@@ -3,7 +3,7 @@ set -xe
 
 echo $TYPE
 
-su webapp
+su webapp <<_
 
 curl https://pyenv.run | bash;
 pyenv install 3.10.4 && pyenv global 3.10.4
@@ -15,6 +15,7 @@ echo 'eval "$(pyenv init -)"' >> /home/webapp/.bashrc
 source ~/.bashrc 
 eval "$(pyenv init -)" 
 python -m pip install locust==2.16.1 locust-plugins==4.0.0 paho-mqtt==1.6.1 websocket-client==1.6.2 ujson
+_
 
 if [ "$TYPE" == "controller" ]; then
     echo "source ~/.bashrc && cd /var/app/current && python -m locust -f ./http_client/locustfile.py --tags load_test" > application
