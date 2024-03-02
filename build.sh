@@ -5,10 +5,10 @@ echo $TYPE
 
 whoami
 
-curl https://pyenv.run | bash;
 echo "checking if pyenv is already set up in webapp."
 cat /home/webapp/.bashrc | grep PYENV_ROOT
 if [ "$(cat /home/webapp/.bashrc | grep PYENV_ROOT)" == "" ]; then
+    curl https://pyenv.run | bash;
     echo "Inside pyenv bashrc setup"
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/webapp/.bashrc
     echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/webapp/.bashrc
