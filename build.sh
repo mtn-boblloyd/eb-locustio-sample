@@ -3,6 +3,8 @@ set -xe
 
 echo $TYPE
 
+whoami
+
 sudo -H -u webapp bash -c 'curl https://pyenv.run | bash;'
 echo "checking if pyenv is already set up in webapp."
 cat /home/webapp/.bashrc | grep PYENV_ROOT
