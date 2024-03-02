@@ -13,7 +13,7 @@ if [ "$(cat /home/webapp/.bashrc | grep PYENV_ROOT)" == "" ]; then
     echo 'eval "$(pyenv init -)"' >> /home/webapp/.bashrc
 fi
 
-if []; then
+if [ -d /home/webapp/.pyenv/versions/3.10.4/ ]; then
     source ~/.bashrc
     eval "$(pyenv init -)"  
     pyenv install 3.10.4 && pyenv global 3.10.4
