@@ -22,9 +22,9 @@ fi
 _
 
 if [ "$TYPE" == "controller" ]; then
-    echo "source ~/.bashrc && eval "$(pyenv init -)"  && cd /var/app/current && python -m locust -f ./http_client/locustfile.py --tags load_test" > application
+    echo "source ~/.bashrc && cd /var/app/current && python -m locust -f ./http_client/locustfile.py --tags load_test" > application
 else
-    echo "source ~/.bashrc && eval "$(pyenv init -)" && python --version" > application
+    echo "source ~/.bashrc && python --version" > application
 fi
 
 chmod 755 application
