@@ -7,8 +7,8 @@ whoami
 
 echo "checking if pyenv is already set up in webapp."
 cat /home/webapp/.bashrc | grep PYENV_ROOT
-if [ "$(cat /home/webapp/.bashrc | grep PYENV_ROOT)" == "" ]; then
-    curl https://pyenv.run | bash;
+if [ ! -d /home/webapp/.pyenv ]; then
+    curl https://pyenv.run | bash
     echo "Inside pyenv bashrc setup"
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/webapp/.bashrc
     echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/webapp/.bashrc
@@ -18,7 +18,7 @@ fi
 
 echo "checking if python version 3.10.4 is already installed"
 ls /home/webapp/.pyenv/versions/3.10.4
-if [ -d /home/webapp/.pyenv/versions/3.10.4/ ]; then
+if [ ! -d /home/webapp/.pyenv/versions/3.10.4/ ]; then
     echo "Inside python install..."
     source ~/.bashrc
     eval "$(pyenv init -)"
