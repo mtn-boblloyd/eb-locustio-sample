@@ -13,10 +13,12 @@ if [ "$(cat /home/webapp/.bashrc | grep PYENV_ROOT)" == "" ]; then
     echo 'eval "$(pyenv init -)"' >> /home/webapp/.bashrc
 fi
 
-source ~/.bashrc
-eval "$(pyenv init -)"  
-pyenv install 3.10.4 && pyenv global 3.10.4
-python -m pip install locust==2.16.1 locust-plugins==4.0.0 paho-mqtt==1.6.1 websocket-client==1.6.2 ujson
+if []; then
+    source ~/.bashrc
+    eval "$(pyenv init -)"  
+    pyenv install 3.10.4 && pyenv global 3.10.4
+    python -m pip install locust==2.16.1 locust-plugins==4.0.0 paho-mqtt==1.6.1 websocket-client==1.6.2 ujson
+fi
 _
 
 if [ "$TYPE" == "controller" ]; then
