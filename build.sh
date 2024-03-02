@@ -6,10 +6,9 @@ echo $TYPE
 whoami
 
 echo "checking if pyenv is already set up in webapp."
-cat /home/webapp/.bashrc | grep PYENV_ROOT
 if [ ! -d /home/webapp/.pyenv ]; then
-    curl https://pyenv.run | bash
     echo "Inside pyenv bashrc setup"
+    curl https://pyenv.run | bash
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/webapp/.bashrc
     echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/webapp/.bashrc
     echo 'export PATH="$PYENV_ROOT/shims:$PATH"' >> /home/webapp/.bashrc
