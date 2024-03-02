@@ -16,7 +16,6 @@ if [ ! -d /home/webapp/.pyenv ]; then
 fi
 
 echo "checking if python version 3.10.4 is already installed"
-ls /home/webapp/.pyenv/versions/3.10.4
 if [ ! -d /home/webapp/.pyenv/versions/3.10.4/ ]; then
     echo "Inside python install..."
     source ~/.bashrc
