@@ -5,7 +5,7 @@ echo $TYPE
 
 whoami
 
-sudo -H -u webapp bash -c 'curl https://pyenv.run | bash;'
+curl https://pyenv.run | bash;
 echo "checking if pyenv is already set up in webapp."
 cat /home/webapp/.bashrc | grep PYENV_ROOT
 if [ "$(cat /home/webapp/.bashrc | grep PYENV_ROOT)" == "" ]; then
@@ -22,8 +22,8 @@ if [ -d /home/webapp/.pyenv/versions/3.10.4/ ]; then
     echo "Inside python install..."
     source ~/.bashrc
     eval "$(pyenv init -)"
-    sudo -H -u webapp bash -c 'source ~/.bashrc && pyenv install 3.10.4 && pyenv global 3.10.4'
-    sudo -H -u webapp bash -c 'source ~/.bashrc && python -m pip install locust==2.16.1 locust-plugins==4.0.0 paho-mqtt==1.6.1 websocket-client==1.6.2 ujson'
+    source ~/.bashrc && pyenv install 3.10.4 && pyenv global 3.10.4
+    source ~/.bashrc && python -m pip install locust==2.16.1 locust-plugins==4.0.0 paho-mqtt==1.6.1 websocket-client==1.6.2 ujson
 fi
 
 echo "Done with webapp user configuration, building the application file."
