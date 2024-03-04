@@ -1,0 +1,7 @@
+eb init --keyname mtn_aws --platform "Corretto 21 running on 64bit Amazon Linux 2023" --region us-west-1 spectre-pragma-load-test
+
+eb create --cname spectre-pragma-load-test-server-control --envvars TYPE=server-controller,PRAGMA_HOST=dev.internal.spectre.mountaintop.pragmaengine.com --instance_type t2.micro --platform "Corretto 21 running on 64bit Amazon Linux 2023" -im 1 -ix 1 spectre-pragma-load-test-controller-server
+eb create --cname spectre-pragma-load-test-server-worker --envvars TYPE=server-worker,PRAGMA_HOST=dev.internal.spectre.mountaintop.pragmaengine.com --instance_type t2.micro --platform "Corretto 21 running on 64bit Amazon Linux 2023" -im $SERVER_WORKER_COUNT -ix $SERVER_WORKER_COUNT spectre-pragma-load-test-worker-server 
+
+eb create --cname spectre-pragma-load-test-client-control --envvars TYPE=client-controller,PRAGMA_HOST=dev.internal.spectre.mountaintop.pragmaengine.com --instance_type t2.micro --platform "Corretto 21 running on 64bit Amazon Linux 2023"  -im 1 -ix 1 us-west-1 spectre-pragma-load-test-controller-client
+eb create --cname spectre-pragma-load-test-client-worker --envvars TYPE=client-worker,PRAGMA_HOST=dev.internal.spectre.mountaintop.pragmaengine.com --instance_type t2.micro --platform "Corretto 21 running on 64bit Amazon Linux 2023" us-west-1 -im $CLIENT_WORKER_COUNT -ix $CLIENT_WORKER_COUNT spectre-pragma-load-test-worker-client
