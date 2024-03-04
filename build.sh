@@ -26,13 +26,13 @@ fi
 
 echo "Done with webapp user configuration, building the application file."
 
-if [ "$TYPE" == "server_controller" ]; then
+if [ "$TYPE" == "server-controller" ]; then
     echo "source ~/.bashrc && cd /var/app/current && python -m locust -f websocket_server/locustfile.py --tags load_test --host ws://$PRAGMA_HOST:10100 -u 200 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --master -P 8088 --master-bind-port 5556" > application
-elif [ "$TYPE" == "client_controller" ]; then
+elif [ "$TYPE" == "client-controller" ]; then
     echo "source ~/.bashrc && cd /var/app/current && python -m locust -f websocket_client/locustfile.py --tags load_test --host ws://$PRAGMA_HOST:10100 -u 200 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --master -P 8088 --master-bind-port 5556 --matchmaking-script "configs/websocket_matchmaking_full.json"" > application
-elif [ "$TYPE" == "server_worker" ]; then
+elif [ "$TYPE" == "server-worker" ]; then
     echo "source ~/.bashrc && cd /var/app/current && python -m locust -f websocket_server/locustfile.py --tags load_test --host ws://$PRAGMA_HOST:10100 -u 200 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --worker --master-host spectre-pragma-load-test-controller-server.us-west-1.elasticbeanstalk.com --master-bind-port 5556" > application
-elif [ "$TYPE" == "server_worker" ]; then
+elif [ "$TYPE" == "server-worker" ]; then
     echo "source ~/.bashrc && cd /var/app/current && python -m locust -f websocket_client/locustfile.py --tags load_test --host ws://$PRAGMA_HOST:10100 -u 200 -r 10 --login-schema http --http-port 11000 --operator-port 11200 --worker --master-host spectre-pragma-load-test-controller-client.us-west-1.elasticbeanstalk.com --master-bind-port 5556 --matchmaking-script configs/websocket_matchmaking_full.json" > application
 else
     echo "Something is wrong, and the type is not matched!"
